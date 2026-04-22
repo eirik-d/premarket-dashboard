@@ -136,7 +136,10 @@
       <div class="subtitle" id="mainSubtitle"></div>
       <div style="display:flex;align-items:center;gap:1rem;margin-top:0.75rem;">
         <div class="region-tabs" id="regionTabs"></div>
-        <button id="langToggle" style="background:var(--brown-4);color:var(--brown-2);border:none;padding:0.4rem 0.8rem;border-radius:6px;font-size:0.75rem;font-weight:600;cursor:pointer;">EN</button>
+        <div id="langToggle" style="display:inline-flex;background:var(--brown-4);border-radius:20px;overflow:hidden;cursor:pointer;border:2px solid var(--brown-3);">
+          <span id="langNO" style="padding:0.35rem 0.9rem;font-size:0.75rem;font-weight:700;transition:all 0.2s;background:var(--white);color:var(--brown);border-radius:18px;">NO</span>
+          <span id="langEN" style="padding:0.35rem 0.9rem;font-size:0.75rem;font-weight:700;transition:all 0.2s;color:var(--brown-2);border-radius:18px;">EN</span>
+        </div>
       </div>
     </div>
   </div>
@@ -302,9 +305,20 @@ function renderTabs() {
   });
 }
 
+function updateLangPill() {
+  const noEl = document.getElementById('langNO');
+  const enEl = document.getElementById('langEN');
+  if (lang === 'no') {
+    noEl.style.background = 'var(--white)'; noEl.style.color = 'var(--brown)';
+    enEl.style.background = 'transparent'; enEl.style.color = 'var(--brown-2)';
+  } else {
+    enEl.style.background = 'var(--white)'; enEl.style.color = 'var(--brown)';
+    noEl.style.background = 'transparent'; noEl.style.color = 'var(--brown-2)';
+  }
+}
 document.getElementById('langToggle').addEventListener('click', () => {
   lang = lang === 'no' ? 'en' : 'no';
-  document.getElementById('langToggle').textContent = lang === 'no' ? 'EN' : 'NO';
+  updateLangPill();
   render();
 });
 
@@ -313,7 +327,7 @@ function render() {
   renderTabs();
   document.getElementById('mainTitle').textContent = t('title');
   document.getElementById('mainSubtitle').textContent = t('subtitle');
-  document.getElementById('mainFooter').textContent = t('footer').replace('{date}', '22.4.2026, 10:07:02');
+  document.getElementById('mainFooter').textContent = t('footer').replace('{date}', '22.4.2026, 10:07:47');
 
   const d = DATA[activeRegion];
   if (!d) { document.getElementById('content').innerHTML = '<p>' + t('noData') + '</p>'; return; }
