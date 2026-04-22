@@ -313,7 +313,7 @@ function render() {
   renderTabs();
   document.getElementById('mainTitle').textContent = t('title');
   document.getElementById('mainSubtitle').textContent = t('subtitle');
-  document.getElementById('mainFooter').textContent = t('footer').replace('{date}', '22.4.2026, 10:01:57');
+  document.getElementById('mainFooter').textContent = t('footer').replace('{date}', '22.4.2026, 10:05:22');
 
   const d = DATA[activeRegion];
   if (!d) { document.getElementById('content').innerHTML = '<p>' + t('noData') + '</p>'; return; }
@@ -325,94 +325,94 @@ function render() {
 
   const lowData = d.reliableDays < 7;
   document.getElementById('content').innerHTML = `
-    ${lowData ? '<div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:0.75rem 1.25rem;margin-bottom:1rem;font-size:0.82rem;color:#9a3412;"><strong>' + t('limitedData') + '</strong> ' + t('limitedDataMsg').replace('{n}', d.reliableDays) + '</div>' : ''}
+    ${lowData ? '<div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:0.75rem 1.25rem;margin-bottom:1rem;font-size:0.82rem;color:#9a3412;"><strong>${t("limitedData")}</strong> ${t("limitedDataMsg").replace("{n}", d.reliableDays)}</div>' : ''}
     <!-- KPIs -->
     <div class="kpi-row">
       <div class="kpi">
-        <div class="label">' + t('kpiFinn') + '</div>
+        <div class="label">${t("kpiFinn")}</div>
         <div class="val">${fmt(d.finnTotal)}</div>
-        <div class="sub">' + t('activeListings') + '</div>
+        <div class="sub">${t("activeListings")}</div>
       </div>
       <div class="kpi accent-green">
-        <div class="label">' + t('kpiHjem') + '</div>
+        <div class="label">${t("kpiHjem")}</div>
         <div class="val">${fmt(d.hjemTotal)}</div>
-        <div class="sub">${d.finnTotal > 0 ? ((d.hjemTotal / d.finnTotal * 100).toFixed(0) + t('ofFinn')) : ''}</div>
+        <div class="sub">${d.finnTotal > 0 ? ((d.hjemTotal / d.finnTotal * 100).toFixed(0) + t("ofFinn")) : ''}</div>
       </div>
       <div class="kpi accent-blue">
-        <div class="label">' + t('kpiMatched') + '</div>
+        <div class="label">${t("kpiMatched")}</div>
         <div class="val">${fmt(d.matchCount)}</div>
-        <div class="sub">' + t('onBoth') + '</div>
+        <div class="sub">${t("onBoth")}</div>
       </div>
       <div class="kpi">
-        <div class="label">' + t('kpiFirstHjem') + '</div>
+        <div class="label">${t("kpiFirstHjem")}</div>
         <div class="val">${fmt(d.delays.length)}</div>
-        <div class="sub">' + t('measuredDelay') + '</div>
+        <div class="sub">${t("measuredDelay")}</div>
       </div>
       <div class="kpi ${d.avgDelay > 1 ? 'warn' : 'accent-green'}">
-        <div class="label">' + t('kpiAvgDelay') + '</div>
-        <div class="val">${avgDelayHours}' + t('hoursUnit') + '</div>
-        <div class="sub">${d.avgDelay > 1 ? t('over24limit') : t('within24')}</div>
+        <div class="label">${t("kpiAvgDelay")}</div>
+        <div class="val">${avgDelayHours}${t("hoursUnit")}</div>
+        <div class="sub">${d.avgDelay > 1 ? t("over24limit") : t("within24")}</div>
       </div>
       <div class="kpi ${beyond24 > 0 ? 'warn' : ''}">
-        <div class="label">' + t('kpiOver24') + '</div>
+        <div class="label">${t("kpiOver24")}</div>
         <div class="val">${beyond24}</div>
-        <div class="sub">${beyondPct}' + t('ofDelayed') + '</div>
+        <div class="sub">${beyondPct}${t("ofDelayed")}</div>
       </div>
     </div>
 
     <!-- Charts row 1: Timeline + Delay distribution -->
-    <h3 class="section-title">' + t('sectionInventory') + '</h3>
+    <h3 class="section-title">${t("sectionInventory")}</h3>
     <div class="grid">
       <div class="card">
-        <h2>' + t('chartTimeline') + '</h2>
+        <h2>${t("chartTimeline")}</h2>
         <div class="chart-box"><canvas id="timelineChart"></canvas></div>
       </div>
       <div class="card">
-        <h2>' + t('chartBuckets') + '</h2>
-        <p class="desc">' + t('chartBucketsDesc') + '</p>
+        <h2>${t("chartBuckets")}</h2>
+        <p class="desc">${t("chartBucketsDesc")}</p>
         <div class="chart-box"><canvas id="bucketChart"></canvas></div>
       </div>
     </div>
 
     <!-- Charts row 2: Per-agency delay + Agency inventory -->
-    <h3 class="section-title">' + t('sectionAgencies') + '</h3>
+    <h3 class="section-title">${t("sectionAgencies")}</h3>
     <div class="grid">
       <div class="card">
-        <h2>' + t('chartAgencyDelay') + '</h2>
-        <p class="desc">' + t('chartAgencyDelayDesc') + '</p>
+        <h2>${t("chartAgencyDelay")}</h2>
+        <p class="desc">${t("chartAgencyDelayDesc")}</p>
         <div class="chart-box"><canvas id="agencyDelayChart"></canvas></div>
       </div>
       <div class="card">
-        <h2>' + t('chartInventory') + '</h2>
+        <h2>${t("chartInventory")}</h2>
         <div class="chart-box"><canvas id="agencyChart"></canvas></div>
       </div>
     </div>
 
     <!-- Office Thermometer -->
     ${d.officeThermometer && d.officeThermometer.length > 0 ? `
-    <h3 class="section-title">' + t('sectionThermo') + '</h3>
-    <p style="font-size:0.78rem;color:var(--grey-3);margin:-0.5rem 0 1rem;">' + t('thermoDesc') + '</p>
+    <h3 class="section-title">${t("sectionThermo")}</h3>
+    <p style="font-size:0.78rem;color:var(--grey-3);margin:-0.5rem 0 1rem;">${t("thermoDesc")}</p>
     <div class="thermo-list" id="thermoList"></div>
     ` : ''}
 
     <!-- Delay trend line chart -->
     ${d.delayTrend && d.delayTrend.dates.length > 2 ? `
     <div class="card" style="margin-bottom:2rem;">
-      <h2>' + t('chartTrend') + '</h2>
-      <p class="desc">' + t('chartTrendDesc') + '</p>
+      <h2>${t("chartTrend")}</h2>
+      <p class="desc">${t("chartTrendDesc")}</p>
       <div class="chart-box" style="height:280px;"><canvas id="delayTrendChart"></canvas></div>
     </div>
     ` : ''}
 
     <!-- Agency table -->
     <div class="tbl">
-      <h2>' + t('tblAgency') + '</h2>
+      <h2>${t("tblAgency")}</h2>
       <table>
         <thead><tr>
-          <th>' + t('thAgency') + '</th>
-          <th class="r">' + t('thFinn') + '</th>
-          <th class="r">' + t('thHjem') + '</th>
-          <th style="min-width:160px">' + t('thAdoption') + '</th>
+          <th>${t("thAgency")}</th>
+          <th class="r">${t("thFinn")}</th>
+          <th class="r">${t("thHjem")}</th>
+          <th style="min-width:160px">${t("thAdoption")}</th>
         </tr></thead>
         <tbody id="agencyTable"></tbody>
       </table>
@@ -421,14 +421,14 @@ function render() {
     <!-- Top delays table -->
     ${d.delays.length > 0 ? `
     <div class="tbl">
-      <h2>' + t('tblDelay') + '</h2>
+      <h2>${t("tblDelay")}</h2>
       <table>
         <thead><tr>
-          <th>' + t('thAddress') + '</th>
-          <th>' + t('thBroker') + '</th>
-          <th class="r">' + t('thDelay') + '</th>
-          <th class="r">' + t('thPrice') + '</th>
-          <th class="r">' + t('thSize') + '</th>
+          <th>${t("thAddress")}</th>
+          <th>${t("thBroker")}</th>
+          <th class="r">${t("thDelay")}</th>
+          <th class="r">${t("thPrice")}</th>
+          <th class="r">${t("thSize")}</th>
         </tr></thead>
         <tbody id="delayTable"></tbody>
       </table>
@@ -440,8 +440,8 @@ function render() {
 
   // Timeline
   if (d.timeline.length > 0) {
-    const labels = d.timeline.map(t => {
-      const dt = new Date(t.day);
+    const labels = d.timeline.map(r => {
+      const dt = new Date(r.day);
       return dt.getDate() + '. ' + ['jan','feb','mar','apr','mai','jun','jul','aug','sep','okt','nov','des'][dt.getMonth()];
     });
     charts.push(new Chart(document.getElementById('timelineChart'), {
@@ -449,8 +449,8 @@ function render() {
       data: {
         labels,
         datasets: [
-          { label: 'FINN.no', data: d.timeline.map(t => t.finn), borderColor: vBrown, backgroundColor: vBrown + '18', fill: true, tension: 0.3, pointRadius: 3, borderWidth: 2 },
-          { label: 'Hjem.no', data: d.timeline.map(t => t.hjem), borderColor: vGreen, backgroundColor: vGreen + '18', fill: true, tension: 0.3, pointRadius: 3, borderWidth: 2 }
+          { label: 'FINN.no', data: d.timeline.map(r => r.finn), borderColor: vBrown, backgroundColor: vBrown + '18', fill: true, tension: 0.3, pointRadius: 3, borderWidth: 2 },
+          { label: 'Hjem.no', data: d.timeline.map(r => r.hjem), borderColor: vGreen, backgroundColor: vGreen + '18', fill: true, tension: 0.3, pointRadius: 3, borderWidth: 2 }
         ]
       },
       options: {
